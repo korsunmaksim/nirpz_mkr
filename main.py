@@ -17,14 +17,13 @@ def get_data(file_path):
     return info
 
 
-def check_price_change(product_name,file_path):
+def check_price_change(product_name,products):
     date=datetime.datetime
     current_month = date.now().month
     last_month = current_month - 1 if current_month > 1 else 12
     last_month_year = date.now().year if last_month != 12 else datetime.datetime.now().year - 1
     last_month_start = date(last_month_year, last_month, 1)
     last_month_end = date(last_month_year, last_month, 1) + datetime.timedelta(days=31)
-    products=get_data(file_path)
     month_prices = []
     for product in products:
         if product.name == product_name and product.date >= last_month_start and product.date < last_month_end:
@@ -35,8 +34,9 @@ def check_price_change(product_name,file_path):
     return f"The price of {product_name} in the last month : {price_change}"
 
 
+products=get_data("info.txt")
 product_name = "Banana"
-print(check_price_change(product_name,"info.txt"))
+print(check_price_change(product_name,products))
 
 
 
